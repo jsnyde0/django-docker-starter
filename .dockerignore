@@ -1,0 +1,14 @@
+.venv
+.env
+Dockerfile
+.DS_Store
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.md
+*.lock
+.python-version
+*.toml
