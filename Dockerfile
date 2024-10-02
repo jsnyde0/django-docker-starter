@@ -1,6 +1,9 @@
 # Use the official Python image from the Docker Hub
 FROM python:3.12-slim
 
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:0.4.18 /uv /bin/uv
+
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -8,13 +11,15 @@ ENV PYTHONUNBUFFERED=1
 # Set the working directory in the container
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt /app/
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Copy dependency files 
+COPY pyproject.toml uv.lock /app/
+
+# Install dependencies using uv, forcing the use of system Python
+ENV UV_SYSTEM_PYTHON=1
+RUN uv sync --frozen --no-install-project
 
 # Copy the entire Django project into the container
 COPY . /app/
 
 # Run the Django development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]

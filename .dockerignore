@@ -9,6 +9,4 @@ Dockerfile
 *.sqlite3
 *.log
 *.md
-*.lock
 .python-version
-*.toml
