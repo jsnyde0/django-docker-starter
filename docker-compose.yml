@@ -2,13 +2,13 @@ name: my-docker-project
 
 version: '3'
 services:
-  # web:
-  #   image: app-image-uv
-  #   container_name: app-container-uv
-  #   ports:
-  #     - "8001:8000"
-  #   volumes:
-  #     - .:/app                    # Bind mount the current directory to /app in the container
+  web:
+    image: app-image-uv
+    container_name: app-container-uv
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app                    # Bind mount the current directory to /app in the container
   postgres:
     image: postgres
     container_name: postgres-container
