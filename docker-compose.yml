@@ -12,6 +12,9 @@ services:
       - .:/app
       - /app/.venv
       - venv_data:/app/venv
+    depends_on:
+      - postgres
+      
   postgres:
     image: postgres
     container_name: postgres-container
