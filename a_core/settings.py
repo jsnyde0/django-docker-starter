@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'django.contrib.sites',
     'django_celery_results',
+    'django_celery_beat',
     'allauth',
     'allauth.account',
     'django_htmx',
