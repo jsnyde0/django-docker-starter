@@ -81,7 +81,7 @@ services:
       - venv_data:/app/venv
     depends_on:
       - redis
-      - app
+      - web
 
 volumes:
   venv_data:
