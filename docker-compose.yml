@@ -57,7 +57,15 @@ services:
       - web
       - redis
       - postgres
-      
+
+  flower:
+    image: app-image
+    container_name: flower-container
+    command: celery -A a_core flower --basic_auth=admin:password123
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
 
 volumes:
   venv_data:
