@@ -11,4 +11,7 @@ dependencies = [
     "django-allauth",
     "django-htmx",
     "psycopg2-binary>=2.9.9",
+    "redis>=5.1.0",
+    "celery>=5.4.0",
+    "django-celery-results>=2.5.1",
 ]

@@ -5,7 +5,7 @@ services:
     build: .
     image: app-image
     container_name: app-container
-    command: uv run python manage.py runserver 0.0.0.0:8000
+    command: /app/entrypoint.sh
     ports:
       - "8000:8000"
     volumes:
@@ -40,6 +40,24 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+
+  celery:
+    image: app-image
+    container_name: celery-container
+    command: celery -A a_core worker -E -l info
+    volumes:
+      - ./a_core:/app/a_core
+      - ./a_home:/app/a_home
+      - ./static:/app/static
+      - ./templates:/app/templates
+      - ./manage.py:/app/manage.py
+      - /app/.venv
+      - venv_data:/app/venv
+    depends_on:
+      - web
+      - redis
+      - postgres
+      
 
 volumes:
   venv_data:

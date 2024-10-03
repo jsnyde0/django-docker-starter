@@ -27,6 +27,7 @@ urlpatterns = [
     path('', include('a_home.urls')),
     path('profile/', include('a_users.urls')),
     path('@<username>/', profile_view, name="profile"),
+    path('count-to-10/', count_to_10, name="count_to_10"),
 ]
 
 # Only used when DEBUG=True, whitenoise can serve files when DEBUG=False

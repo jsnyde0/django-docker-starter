@@ -16,7 +16,7 @@ COPY pyproject.toml uv.lock /app/
 
 # Install dependencies using uv, forcing the use of system Python
 ENV UV_SYSTEM_PYTHON=1
-RUN uv sync --frozen --no-install-project
+RUN uv pip install --system -e .
 
 # Copy the entire Django project into the container
 COPY . /app/
