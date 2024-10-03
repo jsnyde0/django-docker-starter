@@ -20,6 +20,3 @@ RUN uv sync --frozen --no-install-project
 
 # Copy the entire Django project into the container
 COPY . /app/
-
-# Run the Django development server
-CMD ["uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]

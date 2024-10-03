@@ -1,14 +1,17 @@
-name: my-docker-project
+name: learn-docker
 
-version: '3'
 services:
   web:
-    image: app-image-uv
-    container_name: app-container-uv
+    build: .
+    image: app-image
+    container_name: app-container
+    command: uv run python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
     volumes:
-      - .:/app                    # Bind mount the current directory to /app in the container
+      - .:/app
+      - /app/.venv
+      - venv_data:/app/venv
   postgres:
     image: postgres
     container_name: postgres-container
@@ -23,3 +26,4 @@ services:
 
 volumes:
   postgres_data:
+  venv_data:
