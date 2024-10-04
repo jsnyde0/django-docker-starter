@@ -16,6 +16,8 @@ services:
       - ./manage.py:/app/manage.py
       - /app/.venv
       - venv_data:/app/venv
+    env_file:
+      - ./.env
     depends_on:
       - postgres
 
@@ -53,6 +55,8 @@ services:
       - ./manage.py:/app/manage.py
       - /app/.venv
       - venv_data:/app/venv
+    env_file:
+      - ./.env
     depends_on:
       - web
       - redis
@@ -64,6 +68,8 @@ services:
     command: celery -A a_core flower --basic_auth=admin:password123
     ports:
       - "5555:5555"
+    env_file:
+      - ./.env
     depends_on:
       - redis
 
@@ -79,6 +85,8 @@ services:
       - ./manage.py:/app/manage.py
       - /app/.venv
       - venv_data:/app/venv
+    env_file:
+      - ./.env
     depends_on:
       - redis
       - web
