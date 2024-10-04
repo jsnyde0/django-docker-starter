@@ -1,10 +1,14 @@
 #!/bin/bash
 
-# Collect static files
-python manage.py collectstatic --noinput
+set -e
 
-# Apply database migrations
-python manage.py migrate --noinput
+echo "Starting production deployment process..."
 
-# Start Gunicorn
-gunicorn a_core.wsgi --bind 0.0.0.0:8000
+echo "Collecting static files..."
+python manage.py collectstatic --noinput || { echo "Static file collection failed"; exit 1; }
+
+echo "Applying database migrations..."
+python manage.py migrate --noinput || { echo "Database migration failed"; exit 1; }
+
+echo "Starting Gunicorn..."
+exec gunicorn a_core.wsgi:application --bind 0.0.0.0:$PORT
