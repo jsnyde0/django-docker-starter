@@ -1,0 +1,18 @@
+name: django-docker-starter
+
+services:
+  app:
+    build: .
+    image: app-image
+    container_name: app-container
+    command: uv run python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./a_core:/app/a_core
+      - ./a_home:/app/a_home
+      - ./a_users:/app/a_users
+      - ./templates:/app/templates
+      - ./manage.py:/app/manage.py
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
