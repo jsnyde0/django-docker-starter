@@ -5,7 +5,7 @@ services:
     build: .
     image: app-image
     container_name: app-container
-    command: uv run python manage.py runserver 0.0.0.0:8000
+    command: ./entrypoint.sh
     volumes:
       - ./a_core:/app/a_core
       - ./a_home:/app/a_home
@@ -16,3 +16,22 @@ services:
       - "8000:8000"
     environment:
       - DEBUG=1
+      - SUPERUSER_USERNAME=${SUPERUSER_USERNAME}
+      - SUPERUSER_EMAIL=${SUPERUSER_EMAIL}
+      - SUPERUSER_PASSWORD=${SUPERUSER_PASSWORD}
+    depends_on:
+      - db
+  db:
+    image: postgres
+    container_name: db-container
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
