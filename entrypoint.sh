@@ -16,6 +16,17 @@ else:
     print('Superuser already exists.')
 END
 
-# Start the server
-echo "Starting server..."
-exec uv run python manage.py runserver 0.0.0.0:8000
+# Collect static files (for production)
+if [ "$ENVIRONMENT" = "production" ]; then
+    echo "Collecting static files..."
+    uv run python manage.py collectstatic --noinput
+fi
+
+# Start the appropriate server based on the environment
+if [ "$ENVIRONMENT" = "production" ]; then
+    echo "Starting Gunicorn for production..."
+    exec uv run gunicorn a_core.wsgi:application --bind 0.0.0.0:8000
+else
+    echo "Starting development server..."
+    exec uv run python manage.py runserver 0.0.0.0:8000
+fi
