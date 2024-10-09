@@ -16,7 +16,8 @@ import environ
 
 # Initialize environ
 env = environ.Env(
-    DEBUG=(bool, False)
+    DEBUG=(bool, False),
+    ENVIRONMENT=(str, 'development')
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,7 +33,10 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+if env('ENVIRONMENT') == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
