@@ -14,22 +14,22 @@ services:
       - ./manage.py:/app/manage.py
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
-      - ENVIRONMENT=${ENVIRONMENT}
-      - SUPERUSER_USERNAME=${SUPERUSER_USERNAME}
-      - SUPERUSER_EMAIL=${SUPERUSER_EMAIL}
-      - SUPERUSER_PASSWORD=${SUPERUSER_PASSWORD}
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}
     depends_on:
       - db
+
   db:
     image: postgres
     container_name: db-container
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
       - "5432:5432"
 
